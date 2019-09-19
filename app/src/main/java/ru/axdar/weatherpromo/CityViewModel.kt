@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 class CityViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: CityRepository
 
-    private val allCities: LiveData<List<CityEntity>>
+    val allCities: LiveData<List<CityEntity>>
 
     init {
         val cityDao = CityDatabase.buildDatabase(application, viewModelScope).cityDao()
