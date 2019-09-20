@@ -20,8 +20,11 @@ class MainActivity : AppCompatActivity() {
         cities_recycler.layoutManager = LinearLayoutManager(this)
 
         cityViewModel = ViewModelProviders.of(this).get(CityViewModel::class.java)
+
         cityViewModel.allCities.observe(this, Observer { cities ->
             cities?.let { adapter.setCityList(it) }
         })
+
+
     }
 }

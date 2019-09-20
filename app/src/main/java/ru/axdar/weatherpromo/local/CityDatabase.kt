@@ -1,4 +1,4 @@
-package ru.axdar.weatherpromo
+package ru.axdar.weatherpromo.local
 
 import android.content.Context
 import androidx.room.Database

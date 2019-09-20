@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.city_item.view.*
+import ru.axdar.weatherpromo.local.CityEntity
 
 /** Created by qq_3000 on 19.09.2019. */
 class CityListAdapter(context: Context) : RecyclerView.Adapter<CityListAdapter.ViewHolder>() {

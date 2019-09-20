@@ -1,4 +1,4 @@
-package ru.axdar.weatherpromo
+package ru.axdar.weatherpromo.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

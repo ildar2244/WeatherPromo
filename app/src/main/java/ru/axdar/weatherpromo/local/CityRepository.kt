@@ -1,6 +1,8 @@
-package ru.axdar.weatherpromo
+package ru.axdar.weatherpromo.local
 
 import androidx.lifecycle.LiveData
+import ru.axdar.weatherpromo.local.CityDao
+import ru.axdar.weatherpromo.local.CityEntity
 
 /** Created by qq_3000 on 19.09.2019. */
 class CityRepository(private val cityDao: CityDao) {

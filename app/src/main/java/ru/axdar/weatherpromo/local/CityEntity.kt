@@ -1,4 +1,4 @@
-package ru.axdar.weatherpromo
+package ru.axdar.weatherpromo.local
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
