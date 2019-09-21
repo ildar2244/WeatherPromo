@@ -8,4 +8,6 @@ import ru.axdar.weatherpromo.local.CityEntity
 class CityRepository(private val cityDao: CityDao) {
 
     val allCities: LiveData<List<CityEntity>> = cityDao.getAllCity()
+
+    suspend fun updateRoom(cityEntity: CityEntity) {cityDao.updateCity(cityEntity)}
 }
