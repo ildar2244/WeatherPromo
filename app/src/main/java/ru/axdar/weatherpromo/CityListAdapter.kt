@@ -27,7 +27,8 @@ class CityListAdapter(context: Context) : RecyclerView.Adapter<CityListAdapter.V
         val city = cityList[position]
         with(holder) {
             view.city_text.text = city.name
-            view.temperature_text.text = city.temperature.toString()
+            view.temperature_text.text =
+                view.context.getString(R.string.temperature, city.temperature.toString())
         }
     }
 
