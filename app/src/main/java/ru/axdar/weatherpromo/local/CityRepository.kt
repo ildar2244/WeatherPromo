@@ -10,4 +10,6 @@ class CityRepository(private val cityDao: CityDao) {
     val allCities: LiveData<List<CityEntity>> = cityDao.getAllCity()
 
     suspend fun updateRoom(cityEntity: CityEntity) {cityDao.updateCity(cityEntity)}
+
+    suspend fun updateTemp(t: Double, id: Int) {cityDao.updateTempCity(t, id)}
 }

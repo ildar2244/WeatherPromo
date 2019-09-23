@@ -46,8 +46,7 @@ abstract class CityDatabase : RoomDatabase() {
 
             cityDao.insertCity(CityEntity(1, "Казань", 0.0))
             cityDao.insertCity(CityEntity(2, "Елабуга", 0.0))
-            cityDao.insertCity(CityEntity(3, "Нижнекамск", 0.0))
-            cityDao.insertCity(CityEntity(4, "Воронеж", 0.0))
+            cityDao.insertCity(CityEntity(3, "Набережные Челны", 0.0))
         }
     }
 }

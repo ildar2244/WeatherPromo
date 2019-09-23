@@ -16,6 +16,9 @@ interface CityDao {
     @Update
     suspend fun updateCity(city: CityEntity)
 
+    @Query("UPDATE city_table SET temperature = :temp WHERE id = :id")
+    suspend fun updateTempCity(temp: Double, id: Int)
+
     @Delete
     suspend fun deleteCity(city: CityEntity)
 
