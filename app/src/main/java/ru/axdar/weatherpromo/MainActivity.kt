@@ -1,5 +1,7 @@
 package ru.axdar.weatherpromo
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,10 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.axdar.weatherpromo.local.CityEntity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewCityDialog.Listener {
+
     private val TAG = "MainActivity"
+    private val addCityRequestCode = 1
     private lateinit var cityViewModel: CityViewModel
-    private var cityList: MutableList<CityEntity> = mutableListOf<CityEntity>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +35,7 @@ class MainActivity : AppCompatActivity() {
         cityViewModel.allCities.observe(this, Observer { cities ->
             cities?.let {
                 adapter.setCityList(it)
-//                cityList = cities.toMutableList()
-//                Log.d(TAG, "onCreate: mLIST: $cityList")
-                getApiData(cities)
+                Log.d(TAG, "onCreate: LIST: $it")
             }
         })
     }
@@ -60,11 +61,20 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_add_city -> {
-                //code for add new city
-                Toast.makeText(this, "Please enter city name.", Toast.LENGTH_SHORT).show()
+                NewCityDialog().show(supportFragmentManager, "city_dialog")
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onInputCityConfirm(cityName: String) {
+        if (cityName.isNotEmpty()) {
+            val newCity = CityEntity(0, cityName)
+            cityViewModel.insertCity(newCity)
+        } else {
+            Toast.makeText(this, "Необходимо ввести название города",
+                Toast.LENGTH_SHORT).show()
+        }
     }
 }

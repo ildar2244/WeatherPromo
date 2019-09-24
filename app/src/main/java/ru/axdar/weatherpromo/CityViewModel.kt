@@ -11,18 +11,17 @@ import kotlinx.coroutines.launch
 import ru.axdar.weatherpromo.local.CityDatabase
 import ru.axdar.weatherpromo.local.CityEntity
 import ru.axdar.weatherpromo.local.CityRepository
+import ru.axdar.weatherpromo.network.WeatherData
 import ru.axdar.weatherpromo.network.WeatherRepository
-import java.lang.Exception
 
 /** Created by qq_3000 on 19.09.2019. */
 class CityViewModel(application: Application) : AndroidViewModel(application) {
-    private val TAG = "CityViewModel"
     private val repoLocal: CityRepository
     private val repoNet: WeatherRepository = WeatherRepository()
     val allCities: LiveData<List<CityEntity>>
 
     init {
-        val cityDao = CityDatabase.buildDatabase(application, viewModelScope).cityDao()
+        val cityDao = CityDatabase.getDatabase(application, viewModelScope).cityDao()
         repoLocal = CityRepository(cityDao)
         allCities = repoLocal.allCities
     }
@@ -32,15 +31,8 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
         emit(response)
     }
 
-    fun load2() {
-        viewModelScope.launch {
-//            repoNet.loadWeather(cityEntity.name)
-            val lst: List<CityEntity> = allCities.value.orEmpty()
-            Log.d(TAG, "load2: LIST: $lst")
-            for (item in lst) {
-                repoNet.loadWeather(item.name)
-            }
-        }
+    fun insertCity(cityEntity: CityEntity) = viewModelScope.launch {
+        repoLocal.insertRoom(cityEntity)
     }
 
     fun updateTemperature(cityEntity: CityEntity) {

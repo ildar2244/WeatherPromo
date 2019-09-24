@@ -9,5 +9,5 @@ import androidx.room.PrimaryKey
 data class CityEntity(
     @PrimaryKey(autoGenerate = true) var id: Int,
     @ColumnInfo(name = "city") val name: String,
-    @ColumnInfo(name = "temperature") var temperature: Double
+    @ColumnInfo(name = "temperature") var temperature: Double = 0.0
 )

@@ -3,4 +3,5 @@
     <string name="toolbar_title">Прогноз погоды</string>
     <string name="temperature">%1$s °C</string>
     <string name="menu_text_add_city">Добавить город</string>
+    <string name="dialog_input_city">Введите название города</string>
 </resources>
