@@ -2,12 +2,8 @@ package ru.axdar.weatherpromo
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.lifecycle.*
+import kotlinx.coroutines.*
 import ru.axdar.weatherpromo.local.CityDatabase
 import ru.axdar.weatherpromo.local.CityEntity
 import ru.axdar.weatherpromo.local.CityRepository
@@ -16,6 +12,8 @@ import ru.axdar.weatherpromo.network.WeatherRepository
 
 /** Created by qq_3000 on 19.09.2019. */
 class CityViewModel(application: Application) : AndroidViewModel(application) {
+    private val TAG = "CityViewModel"
+
     private val repoLocal: CityRepository
     private val repoNet: WeatherRepository = WeatherRepository()
     val allCities: LiveData<List<CityEntity>>
@@ -24,20 +22,35 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
         val cityDao = CityDatabase.getDatabase(application, viewModelScope).cityDao()
         repoLocal = CityRepository(cityDao)
         allCities = repoLocal.allCities
-    }
 
-    fun loadWeather(city: String) = liveData(Dispatchers.IO) {
-        val response = repoNet.loadWeather(city)
-        emit(response)
-    }
-
-    fun insertCity(cityEntity: CityEntity) = viewModelScope.launch {
-        repoLocal.insertRoom(cityEntity)
-    }
-
-    fun updateTemperature(cityEntity: CityEntity) {
-        viewModelScope.launch {
-            repoLocal.updateTemp(cityEntity.temperature, cityEntity.id)
+        viewModelScope.launch(Dispatchers.IO) {
+            loadWeather()
         }
+    }
+
+    private suspend fun loadWeather() {
+        val list = repoLocal.listCities()
+        Log.d(TAG, "BEFORE: $list")
+        for (item in list) {
+            loadForCity(item)
+        }
+    }
+
+    private suspend fun loadForCity(cityEntity: CityEntity) {
+        val response = repoNet.loadWeather(cityEntity.name)
+        val temp = response.list.first().main.temp
+        val updateCity: CityEntity = cityEntity.copy(temperature = temp)
+        updateTemperature(updateCity)
+    }
+
+    fun insertCity(cityEntity: CityEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repoLocal.insertRoom(cityEntity)
+            loadForCity(cityEntity)
+        }
+    }
+
+    private suspend fun updateTemperature(cityEntity: CityEntity) {
+        repoLocal.updateRoom(cityEntity)
     }
 }

@@ -15,9 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import ru.axdar.weatherpromo.local.CityEntity
 
 class MainActivity : AppCompatActivity(), NewCityDialog.Listener {
-
     private val TAG = "MainActivity"
-    private val addCityRequestCode = 1
     private lateinit var cityViewModel: CityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,22 +33,9 @@ class MainActivity : AppCompatActivity(), NewCityDialog.Listener {
         cityViewModel.allCities.observe(this, Observer { cities ->
             cities?.let {
                 adapter.setCityList(it)
-                Log.d(TAG, "onCreate: LIST: $it")
+                Log.d(TAG, "onCreate: OBSERVE: $it")
             }
         })
-    }
-
-    private fun getApiData(list: List<CityEntity>?) {
-        if (list!!.isNotEmpty()) {
-            for (item in list) {
-                cityViewModel.loadWeather(item.name).observe(this, Observer {
-                    val temp = it.list.first().main.temp
-                    val updateCity: CityEntity = item.copy(temperature = temp)
-                    Log.d(TAG, "getApiData: TEMP: $updateCity")
-//                    cityViewModel.updateTemperature(updateCity)
-                })
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
