@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), NewCityDialog.Listener {
 
     override fun onInputCityConfirm(cityName: String) {
         if (cityName.isNotEmpty()) {
-            val newCity = CityEntity(0, cityName)
+            val newCity = CityEntity(name = cityName)
             cityViewModel.insertCity(newCity)
         } else {
             Toast.makeText(this, "Необходимо ввести название города",

@@ -13,7 +13,7 @@ interface CityDao {
     @Query("SELECT * FROM city_table")
     fun getCities(): List<CityEntity>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCity(city: CityEntity)
 
     @Update

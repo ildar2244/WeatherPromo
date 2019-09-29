@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toStartOf="@id/temperature_text"
         android:padding="4dp"
         android:gravity="center_vertical|start"
-        android:textSize="24sp"
+        android:textSize="@dimen/city_item_text_size"
         app:layout_constraintHorizontal_weight="5"/>
 
     <TextView
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="4dp"
         android:gravity="center_vertical|end"
-        android:textSize="24sp"
+        android:textSize="@dimen/city_item_text_size"
         app:layout_constraintHorizontal_weight="2"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
