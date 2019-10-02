@@ -1,7 +1,5 @@
 package ru.axdar.weatherpromo
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,8 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import ru.axdar.weatherpromo.local.CityEntity
 
 class MainActivity : AppCompatActivity(), NewCityDialog.Listener {
-    private val TAG = "MainActivity"
-    private lateinit var cityViewModel: CityViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +25,11 @@ class MainActivity : AppCompatActivity(), NewCityDialog.Listener {
         cities_recycler.adapter = adapter
         cities_recycler.layoutManager = LinearLayoutManager(this)
 
-        cityViewModel = ViewModelProviders.of(this).get(CityViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        cityViewModel.allCities.observe(this, Observer { cities ->
+        mainViewModel.allCities.observe(this, Observer { cities ->
             cities?.let {
                 adapter.setCityList(it)
-                Log.d(TAG, "onCreate: OBSERVE: $it")
             }
         })
     }
@@ -56,7 +52,7 @@ class MainActivity : AppCompatActivity(), NewCityDialog.Listener {
     override fun onInputCityConfirm(cityName: String) {
         if (cityName.isNotEmpty()) {
             val newCity = CityEntity(name = cityName)
-            cityViewModel.insertCity(newCity)
+            mainViewModel.insertCity(newCity)
         } else {
             Toast.makeText(this, "Необходимо ввести название города",
                 Toast.LENGTH_SHORT).show()

@@ -15,4 +15,6 @@ class CityRepository(private val cityDao: CityDao) {
     suspend fun insertRoom(cityEntity: CityEntity) {cityDao.insertCity(cityEntity)}
 
     suspend fun updateRoom(cityEntity: CityEntity) {cityDao.updateCity(cityEntity)}
+
+    suspend fun deleteRoom(cityEntity: CityEntity) {cityDao.deleteCity(cityEntity)}
 }
